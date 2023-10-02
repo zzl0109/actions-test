@@ -22,5 +22,6 @@ jobs:
         uses: docker/build-push-action@v2
         with:
           context: .
+          file: Dockerfile # 指定Dockerfile的正确路径
           push: true
           tags: zhangzhulei/github-actions-test:latest
