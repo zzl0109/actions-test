@@ -50,8 +50,7 @@ jobs:
       - name: Get existing image versions
         id: existing_versions
         run: |
-          current_image_version=$(docker images -q --filter reference=zhangzhulei/github-actions-test --format "{{.Tag}}")  
-          echo "::set-output name=current_version::$current_image_version"
+          echo "::set-output name=current_version::$(docker images -q --filter reference=zhangzhulei/github-actions-test --format "{{.Tag}}") "
 
       - name: Build and push Docker images
         run: |
