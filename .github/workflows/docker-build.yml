@@ -50,7 +50,7 @@ jobs:
       - name: Get existing image versions
         id: existing_versions
         run: |
-          version = $(docker images -q --filter reference=zhangzhulei/github-actions-test --format "{{.Tag}}")  
+          version=$(echo docker images -q --filter reference=zhangzhulei/github-actions-test --format "{{.Tag}}")  
           echo "get version $(docker images -q --filter reference=zhangzhulei/github-actions-test --format "{{.Tag}}")"
           echo "::set-output name=current_version::$version"
 
