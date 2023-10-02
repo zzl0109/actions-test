@@ -50,8 +50,8 @@ jobs:
       - name: Get existing image versions
         id: existing_versions
         run: |
-          version=$(docker images -q --filter reference=zhangzhulei/github-actions-test --format "{{.Tag}}")  
-          echo "get version $(docker images -q --filter reference=zhangzhulei/github-actions-test --format "{{.Tag}}")"
+          version=$(curl -s https://registry.hub.docker.com/v2/repositories/zhangzhulei/github-actions-test/tags | jq -r '.results[0].name')
+          echo "get version $(curl -s https://registry.hub.docker.com/v2/repositories/zhangzhulei/github-actions-test/tags | jq -r '.results[0].name')"
           echo "::set-output name=current_version::$version"
 
       - name: Build and push Docker images
