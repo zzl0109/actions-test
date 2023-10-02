@@ -64,7 +64,7 @@ jobs:
             minor=0  
             patch=1  
           else
-            patch=$((patch+1))
+            patch=$patch+1
           fi 
 
           new_version="$major.$minor.$patch"  
