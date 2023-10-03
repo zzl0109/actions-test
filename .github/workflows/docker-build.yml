@@ -84,6 +84,8 @@ jobs:
 
           # 设置环境变量
           echo "IMAGE_NAME=${image_name}" >> $GITHUB_ENV
+          # 重新加载环境变量文件，使新的环境变量生效  
+          source $GITHUB_ENV  
 
           # 执行 existing_versions 步骤的逻辑，使用当前步骤的环境变量（包括新设置的 image_name）来获取新的版本号
           ${{ steps.existing_versions.run }}    
@@ -100,6 +102,8 @@ jobs:
 
           # 设置环境变量  
           echo "IMAGE_NAME=${image_name}" >> $GITHUB_ENV
+          # 重新加载环境变量文件，使新的环境变量生效  
+          source $GITHUB_ENV  
 
           # 执行 existing_versions 步骤的逻辑，使用当前步骤的环境变量（包括新设置的 image_name）来获取新的版本号
           ${{ steps.existing_versions.run }}    
