@@ -49,7 +49,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build and push Docker image for service user
         # 只当目标service的代码或者common、utils下的代码变更才会执行该步骤
-        if: "contains(steps.changed_files.outputs.changed_files, 'server/service/user/') || contains(steps.changed_files.outputs.changed_files, 'server/service/utils/') || contains(steps.changed_files.outputs.changed_files, 'server/service/common/')"
+        if: "contains(steps.changed_files.outputs.changed_files, 'server/service/user/') || contains(steps.changed_files.outputs.changed_files, 'server/service/utils/') || contains(steps.changed_files.outputs.changed_files, 'server/service/common/') || contains(steps.changed_files.outputs.changed_files, '.github/workflows/docker-build.yml')"
         run: |
           service_name='user'
           image_name=qiji-$service_name-cicd-test
@@ -64,7 +64,7 @@ jobs:
 
       - name: Build and push Docker image for service github-actions-test
         # 只当目标service的代码或者common、utils下的代码变更才会执行该步骤
-        if: "contains(steps.changed_files.outputs.changed_files, 'server/service/actions/') || contains(steps.changed_files.outputs.changed_files, 'server/service/utils/') || contains(steps.changed_files.outputs.changed_files, 'server/service/common/')"
+        if: "contains(steps.changed_files.outputs.changed_files, 'server/service/actions/') || contains(steps.changed_files.outputs.changed_files, 'server/service/utils/') || contains(steps.changed_files.outputs.changed_files, 'server/service/common/') || contains(steps.changed_files.outputs.changed_files, '.github/workflows/docker-build.yml')"
         run: |
           service_name='actions'
           image_name=qiji-$service_name-cicd-test
