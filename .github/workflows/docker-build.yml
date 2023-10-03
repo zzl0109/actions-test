@@ -54,7 +54,7 @@ jobs:
           service_name='user'
           image_name=qiji-$service_name-cicd-test
           dockerfile_path=server/service/$service_name/Dockerfile
-          new_version=$(./version_upgrade.sh ${{ steps.branch_name.outputs.branch }} $image_name)
+          new_version=$(./version_upgrade.sh ${{ env.CURRENT_PUSHED_BRANCH_NAME }} $image_name)
 
 
           echo "CURRENT_PUSHED_BRANCH_NAME ${{ env.CURRENT_PUSHED_BRANCH_NAME }}"
@@ -72,7 +72,7 @@ jobs:
           service_name='actions'
           image_name=qiji-$service_name-cicd-test
           dockerfile_path=server/service/$service_name/Dockerfile
-          new_version=$(./version_upgrade.sh ${{ steps.branch_name.outputs.branch }} $image_name)
+          new_version=$(./version_upgrade.sh ${{ env.CURRENT_PUSHED_BRANCH_NAME }} $image_name)
 
           echo "build $service_name service"
           echo "image name is $image_name"
