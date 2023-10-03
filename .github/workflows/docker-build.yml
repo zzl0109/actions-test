@@ -34,6 +34,7 @@ jobs:
         id: branch_name
         run: |
           echo "IMAGE_NAME=master" >> $GITHUB_ENV
+          echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
           echo "current_pushed_branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT 
           echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
 
@@ -66,6 +67,7 @@ jobs:
 
 
           echo "IMAGE_NAME ${{ env.IMAGE_NAME }}"
+          echo "BRANCH_NAME ${{ env.BRANCH_NAME }}"
           echo "branch name ${{ env.current_pushed_branch }}"
 
           echo "build $service_name service"
