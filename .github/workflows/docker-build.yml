@@ -30,6 +30,11 @@ jobs:
         with:
           fetch-depth: 2
 
+      - name: Load environment variables
+        uses: actions/setup-env@v2
+        with:
+          env_file: ./.github/.env
+
       - name: Get branch name
         id: branch_name
         run: |
