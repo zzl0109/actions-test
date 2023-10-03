@@ -39,6 +39,8 @@ jobs:
       - name: Print changed files
         run: |
           echo "Changed files:"  
+          ishas=$(contains(${{ steps.changed_files.outputs.changed_files }}, 'server/service/actions/**'))
+          echo "ishas: $ishas"  
           echo "${{ steps.changed_files.outputs.changed_files }}"
 
       # - name: Get Changed Files
