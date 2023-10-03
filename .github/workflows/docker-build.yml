@@ -28,14 +28,14 @@ jobs:
       - name: Get branch name
         id: branch_name
         run: |
-          echo "CURRENT_PUSHED_BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
+          echo "CURRENT_PUSHED_BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
 
       - name: Get changed files
         id: changed_files
         run: |
           changed_files=$(git diff-tree --no-commit-id --name-only -r HEAD | tr '\n' ',')
           echo "changed_files $changed_files"
-          echo "CHANGED_FILES=${changed_files}" >> $GITHUB_OUTPUT
+          echo "CHANGED_FILES=${changed_files}" >> $GITHUB_ENV
 
       - name: Print changed files
         run: |
