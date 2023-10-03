@@ -5,6 +5,7 @@ on:
     branches:
       - "*"
     paths:
+      - ".github/workflows/docker-build.yml"
       - "server/service/user/**"
       - "server/service/actions/**"
       - "server/common/**"
