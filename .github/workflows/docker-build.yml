@@ -78,7 +78,7 @@ jobs:
         # if: contains(github.event.pushed_paths, 'server/service/b/**')
         run: |
           service_name='user'
-          image_name='qiji-${service_name}-test'
+          image_name=qiji-${service_name}-test
 
           # 设置环境变量  
           echo "IMAGE_NAME=${image_name}" >> $GITHUB_ENV
