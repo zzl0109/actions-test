@@ -57,7 +57,7 @@ jobs:
       - name: Build and push Docker images
         run: |
           # Check if any of the service directories have changed  
-          if [[ '${{ steps.existing_versions.outputs.current_version }}'' == 'null' ]]; then  
+          if [[ '${{ steps.existing_versions.outputs.current_version }}' == 'null' ]]; then  
             major=0  
             minor=0  
             patch=1  
