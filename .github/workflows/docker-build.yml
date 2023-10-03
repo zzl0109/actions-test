@@ -86,3 +86,13 @@ jobs:
           docker build -t zhangzhulei/github-actions-test:$new_version -f Dockerfile .  
           docker push zhangzhulei/github-actions-test:$new_version  
           echo "Built and pushed zhangzhulei/github-actions-test with version $new_version"
+
+          services=("service/a" "service/b") # Add more services here if needed  
+          for service in "${services[@]}"; do  
+            echo "Service ${service} image tag: "  
+          done
+
+          services1=("service-a" "service-b") # Add more services here if needed  
+          for service in "${services1}"; do  
+            echo "Service ${service} image tag: "  
+          done
