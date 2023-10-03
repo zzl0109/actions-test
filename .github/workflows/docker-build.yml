@@ -34,9 +34,13 @@ jobs:
           git diff-tree --no-commit-id --name-only -r HEAD  
           changed_files="${changed_files//'\n'/','}" # 将换行符替换为逗号  
           echo "::set-output name=changed_files::$changed_files"
+      - name: Get modified files
+        id: get_modified_files
+        run: echo "::set-output name=modified_files::$(git diff-tree --no-commit-id --name-only -r HEAD)"
 
       - name: Print Changed File Paths
         run: |
+          echo "${{ steps.get_modified_files.outputs.modified_files }}"
           echo "Changed File Paths: ${{ steps.get_changed_files.outputs.changed_files }}"
 
       - name: Login to DockerHub
