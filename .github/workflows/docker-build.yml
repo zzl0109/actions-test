@@ -74,6 +74,24 @@ jobs:
           echo "new_version ${new_version}"
 
           echo "::set-output name=new_version::$new_version"
+      - name: Build and push Docker image for service user
+        # if: contains(github.event.pushed_paths, 'server/service/b/**')
+        run: |
+          service_name='user'
+          image_name='qiji-${service_name}-test'
+
+          # 设置环境变量  
+          echo "IMAGE_NAME=${image_name}" >> $GITHUB_ENV
+          # 重新加载环境变量文件，使新的环境变量生效  
+          source $GITHUB_ENV 
+          echo "IMAGE_NAME ${{ env.IMAGE_NAME }}"
+
+          # 执行 existing_versions 步骤的逻辑，使用当前步骤的环境变量（包括新设置的 image_name）来获取新的版本号
+          ${{ steps.existing_versions.run }}    
+
+          # docker build -t ${namespace}/${image_name}:${{ steps.existing_versions.outputs.new_version }} server/service/${service_name}/Dockerfile
+          # docker push ${namespace}/${image_name}:${{ steps.existing_versions.outputs.new_version }}
+          echo "Service ${service_name} image tag: ${{ steps.existing_versions.outputs.new_version }}"
 
       - name: Build and push Docker image for service github-actions-test
         # if: contains(github.event.pushed_paths, 'server/service/gateway/**')
@@ -86,25 +104,6 @@ jobs:
           echo "IMAGE_NAME=${image_name}" >> $GITHUB_ENV
           # 重新加载环境变量文件，使新的环境变量生效  
           source $GITHUB_ENV
-          echo "IMAGE_NAME ${{ env.IMAGE_NAME }}"
-
-          # 执行 existing_versions 步骤的逻辑，使用当前步骤的环境变量（包括新设置的 image_name）来获取新的版本号
-          ${{ steps.existing_versions.run }}    
-
-          # docker build -t ${namespace}/${image_name}:${{ steps.existing_versions.outputs.new_version }} server/service/${service_name}/Dockerfile
-          # docker push ${namespace}/${image_name}:${{ steps.existing_versions.outputs.new_version }}
-          echo "Service ${service_name} image tag: ${{ steps.existing_versions.outputs.new_version }}"
-
-      - name: Build and push Docker image for service user
-        # if: contains(github.event.pushed_paths, 'server/service/b/**')
-        run: |
-          service_name='user'
-          image_name='qiji-${service_name}-test'
-
-          # 设置环境变量  
-          echo "IMAGE_NAME=${image_name}" >> $GITHUB_ENV
-          # 重新加载环境变量文件，使新的环境变量生效  
-          source $GITHUB_ENV 
           echo "IMAGE_NAME ${{ env.IMAGE_NAME }}"
 
           # 执行 existing_versions 步骤的逻辑，使用当前步骤的环境变量（包括新设置的 image_name）来获取新的版本号
