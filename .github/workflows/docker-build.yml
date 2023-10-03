@@ -93,6 +93,6 @@ jobs:
           done
 
           services1=("service-a" "service-b") # Add more services here if needed  
-          for service in "${services1}"; do  
+          for service in "${services1[@]}"; do  
             echo "Service ${service} image tag: "  
           done
