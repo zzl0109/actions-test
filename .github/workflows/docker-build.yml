@@ -56,7 +56,7 @@ jobs:
           dockerfile_path=server/service/$service_name/Dockerfile
           new_version=$(./version_upgrade.sh ${{ steps.branch_name.outputs.branch }} $image_name)
 
-          echo "build $service service"
+          echo "build $service_name service"
           echo "image name is $image_name"
           echo "dockerfile_path is $dockerfile_path"
 
@@ -71,7 +71,7 @@ jobs:
           dockerfile_path=server/service/$service_name/Dockerfile
           new_version=$(./version_upgrade.sh ${{ steps.branch_name.outputs.branch }} $image_name)
 
-          echo "build $service service"
+          echo "build $service_name service"
           echo "image name is $image_name"
           echo "dockerfile_path is $dockerfile_path"
 
