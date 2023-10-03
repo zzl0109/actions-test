@@ -41,7 +41,7 @@ jobs:
           echo "IMAGE_NAME ${{ env.IMAGE_NAME }}"
           echo "NAMESPACE ${{ env.NAMESPACE }}"
 
-          if [[ '${{ steps.existing_versions.outputs.current_version }}' == 'null' ]]; then  
+          if [[ $current_version == 'null' ]]; then  
             major=0  
             minor=0  
             patch=0  
