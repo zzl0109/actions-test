@@ -13,13 +13,18 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    # if: ${{ github.event.paths && contains(github.event.paths, 'server/service/actions/**') }}
 
     steps:
       - env:
           EVENT_CONTEXT: ${{ toJSON(github.event) }}
         run: |
           echo $EVENT_CONTEXT
+
+      - name: Load environment variables
+        uses: actions/load-env@v2
+        with:
+          file: ./.github/.env
+
       - name: Checkout code
         uses: actions/checkout@v2
         with:
@@ -27,19 +32,21 @@ jobs:
 
       - name: Get branch name
         id: branch_name
-        run: echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
+        run: |
+          echo "current_pushed_branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT 
+          echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
 
       - name: Get changed files
         id: changed_files
         run: |
           changed_files=$(git diff-tree --no-commit-id --name-only -r HEAD | tr '\n' ',')
-          echo "changed_files $changed_files"  
+          echo "changed_files $changed_files"
+          echo "changed_files=$changed_files" >> $GITHUB_OUTPUT 
           echo "::set-output name=changed_files::$changed_files"
 
       - name: Print changed files
         run: |
-          # changed_files_str=${{ steps.changed_files.outputs.changed_files }}
-          # echo "ishas: $(contains($changed_files_str, 'server/service/actions/**'))"  
+          echo "${{ env.changed_files }}"
           echo "${{ steps.changed_files.outputs.changed_files }}"
 
       - name: Login to DockerHub
@@ -55,6 +62,8 @@ jobs:
           image_name=qiji-$service_name-cicd-test
           dockerfile_path=server/service/$service_name/Dockerfile
           new_version=$(./version_upgrade.sh ${{ steps.branch_name.outputs.branch }} $image_name)
+
+          echo "branch name ${{ env.current_pushed_branch }}"
 
           echo "build $service_name service"
           echo "image name is $image_name"
