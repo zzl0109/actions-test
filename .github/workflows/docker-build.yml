@@ -34,6 +34,7 @@ jobs:
         run: |
           git diff-tree --no-commit-id --name-only -r HEAD > changed_files.txt  
           echo "::set-output name=changed_files::$(cat changed_files.txt)"
+
       - name: Print changed files
         run: |
           echo "Changed files:"  
