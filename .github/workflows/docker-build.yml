@@ -15,9 +15,6 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Print current working directory
-        run: pwd
-
       - name: Checkout code
         uses: actions/checkout@v2
 
@@ -33,6 +30,8 @@ jobs:
       - name: Build and push Docker image for service user
         # if: contains(github.event.pushed_paths, 'server/service/b/**')
         run: |
+          pwd  
+          ls
           service_name='user'
           image_name=qiji-${service_name}-test
           echo "${{ pwd }}"
