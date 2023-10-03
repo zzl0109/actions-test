@@ -57,9 +57,19 @@ jobs:
       - name: Build and push Docker images
         run: |
           # Check if any of the service directories have changed  
-          major=$(echo ${{ steps.existing_versions.outputs.current_version }} | awk -F. '{print $1}')  
-          minor=$(echo ${{ steps.existing_versions.outputs.current_version }} | awk -F. '{print $2}')  
-          patch=$(echo ${{ steps.existing_versions.outputs.current_version }} | awk -F. '{print $3}')  
+          if [[ '${{ steps.existing_versions.outputs.current_version }}'' == 'null' ]]; then  
+            major=0  
+            minor=0  
+            patch=1  
+          else
+            major=$(echo ${{ steps.existing_versions.outputs.current_version }} | awk -F. '{print $1}')  
+            minor=$(echo ${{ steps.existing_versions.outputs.current_version }} | awk -F. '{print $2}')  
+            patch=$(echo ${{ steps.existing_versions.outputs.current_version }} | awk -F. '{print $3}')  
+          fi
+
+          # major=$(echo ${{ steps.existing_versions.outputs.current_version }} | awk -F. '{print $1}')  
+          # minor=$(echo ${{ steps.existing_versions.outputs.current_version }} | awk -F. '{print $2}')  
+          # patch=$(echo ${{ steps.existing_versions.outputs.current_version }} | awk -F. '{print $3}')  
           # 将主版本、次版本和补丁版本转换为整数类型  
           # major=$((major+0))  
           # minor=$((minor+0))  
@@ -68,13 +78,8 @@ jobs:
           echo "current version $major.$minor.$patch" 
           echo "existing_versions ${{ steps.existing_versions.outputs.current_version }}" 
 
-          if [[ -z "$major" && -z "$minor" && -z "$patch" ]]; then  
-            major=0  
-            minor=0  
-            patch=1  
-          else
-            patch=$((patch+1))
-          fi 
+          patch=$((patch+1))
+
 
           new_version="$major.$minor.$patch"  
           # Build and push the Docker image with the new version number, and print the version number  
