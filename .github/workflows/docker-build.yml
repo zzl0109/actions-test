@@ -15,6 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NAMESPACE: zhangzhulei
+      IMAGE_NAME: zhangzhulei
 
     steps:
       - name: Checkout code
