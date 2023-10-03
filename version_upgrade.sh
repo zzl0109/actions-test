@@ -32,4 +32,4 @@ fi
 
 new_version="$major.$minor.$patch"
 
-echo $current_version
+echo $new_version
