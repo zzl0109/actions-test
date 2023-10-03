@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NAMESPACE: zhangzhulei
-      IMAGE_NAME: github-actions-test
+      IMAGE_NAME: qiji-user-test
       ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     steps:
