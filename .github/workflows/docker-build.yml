@@ -36,7 +36,9 @@ jobs:
         run: |
           current_version=$(curl -s https://registry.hub.docker.com/v2/repositories/zhangzhulei/${{ env.IMAGE_NAME }}/tags | jq -r '.results[0].name')  
 
+          echo My name is $IMAGE_NAME  
           echo "IMAGE_NAME ${{ env.IMAGE_NAME }}"
+          echo "NAMESPACE ${{ env.NAMESPACE }}"
 
           if [[ '${{ steps.existing_versions.outputs.current_version }}' == 'null' ]]; then  
             major=0  
