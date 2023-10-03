@@ -32,7 +32,6 @@ jobs:
         run: |
           service_name='user'
           image_name=qiji-${service_name}-test
-          echo "${{ pwd }}"
           new_version=$(version_upgrade.sh ${{ steps.branch_name.outputs.branch }} $image_name)
 
           echo "Service ${service_name} image tag: $new_version"
