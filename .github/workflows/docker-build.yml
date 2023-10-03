@@ -61,12 +61,12 @@ jobs:
 
           echo "::set-output name=new_version::$new_version"
 
-      - name: Build and push Docker image for service gateway
+      - name: Build and push Docker image for service github-actions-test
         # if: contains(github.event.pushed_paths, 'server/service/gateway/**')
 
         run: |
-          service_name='gateway'
-          image_name='qiji-${service_name}-test'
+          service_name='github-actions-test'
+          image_name='github-actions-test'
 
           # 设置环境变量
           echo "IMAGE_NAME=${image_name}" >> $GITHUB_ENV
@@ -78,10 +78,10 @@ jobs:
           # docker push ${namespace}/${image_name}:${{ steps.existing_versions.outputs.new_version }}
           echo "Service ${service_name} image tag: ${{ steps.existing_versions.outputs.new_version }}"
 
-      - name: Build and push Docker image for service other
+      - name: Build and push Docker image for service user
         # if: contains(github.event.pushed_paths, 'server/service/b/**')
         run: |
-          service_name='other'
+          service_name='user'
           image_name='qiji-${service_name}-test'
 
           # 设置环境变量  
