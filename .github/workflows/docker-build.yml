@@ -22,6 +22,8 @@ jobs:
           echo $EVENT_CONTEXT
       - name: Checkout code
         uses: actions/checkout@v2
+        with:
+          fetch-depth: 2
 
       - name: Get branch name
         id: branch_name
@@ -40,27 +42,27 @@ jobs:
         id: get_modified_files
         run: echo "::set-output name=modified_files::$(git diff-tree --no-commit-id --name-only -r HEAD)"
 
-      # - name: Get changed files
-      #   id: changed_files
-      #   run: |
-      #     # 获取最后一次提交的哈希值
-      #     last_commit_hash=$(git rev-parse HEAD)
-      #     echo "last_commit_hash $last_commit_hash"
-      #     # 获取上一次提交的哈希值
-      #     previous_commit_hash=$(git rev-parse HEAD~1)
-      #     echo "previous_commit_hash $previous_commit_hash"
-      #     # 使用git diff获取更改的文件列表
-      #     changed_files=$(git diff --name-only $previous_commit_hash $last_commit_hash)
-      #     echo "$last_commit_hash $previous_commit_hash $ changed_files"
-      #     # 将更改的文件列表保存到输出参数中
-      #     echo "::set-output name=changed_files::$changed_files"
+      - name: Get changed files
+        id: changed_files
+        run: |
+          # 获取最后一次提交的哈希值
+          last_commit_hash=$(git rev-parse HEAD)
+          echo "last_commit_hash $last_commit_hash"
+          # 获取上一次提交的哈希值
+          previous_commit_hash=$(git rev-parse HEAD~1)
+          echo "previous_commit_hash $previous_commit_hash"
+          # 使用git diff获取更改的文件列表
+          changed_files=$(git diff --name-only $previous_commit_hash $last_commit_hash)
+          echo "$last_commit_hash $previous_commit_hash $ changed_files"
+          # 将更改的文件列表保存到输出参数中
+          echo "::set-output name=changed_files::$changed_files"
 
-      # - name: Use changed files
-      #   run: |
-      #     # 获取上一步骤的输出参数
-      #     changed_files=${{ steps.changed_files.outputs.changed_files }}
-      #     # 在这里使用更改的文件列表进行后续操作
-      #     echo "Changed files are: $changed_files"
+      - name: Use changed files
+        run: |
+          # 获取上一步骤的输出参数
+          changed_files=${{ steps.changed_files.outputs.changed_files }}
+          # 在这里使用更改的文件列表进行后续操作
+          echo "Changed files are: $changed_files"
 
       - name: Print Changed File Paths
         run: |
