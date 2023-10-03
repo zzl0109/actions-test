@@ -87,7 +87,7 @@ jobs:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build and push Docker image for service user
-        # if: contains(github.event.pushed_paths, 'server/service/user')
+        if: "contains(${{ steps.changed_files.outputs.changed_files }}, 'server/service/user/**')"
         run: |
           service_name='user'
           image_name=qiji-${service_name}-test
@@ -98,7 +98,7 @@ jobs:
           echo "Service ${service_name} image tag: $new_version"
 
       - name: Build and push Docker image for service github-actions-test
-        # if: contains(github.event.pushed_paths, 'server/service/actions/index.html')
+        if: "contains(${{ steps.changed_files.outputs.changed_files }}, 'server/service/actions/**')"
         run: |
           service_name='github-actions-test'
           image_name=github-actions-test
