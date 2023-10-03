@@ -45,7 +45,8 @@ jobs:
           last_commit_hash=$(git rev-parse HEAD)  
           echo "last_commit_hash $last_commit_hash"  
           # 获取上一次提交的哈希值  
-          previous_commit_hash=$(git rev-parse HEAD~1)  
+          previous_commit_hash=$(git rev-parse HEAD^) 
+          echo "previous_commit_hash $previous_commit_hash"  
           # 使用git diff获取更改的文件列表  
           changed_files=$(git diff --name-only $previous_commit_hash $last_commit_hash)
           echo "$last_commit_hash $previous_commit_hash $ changed_files"  
