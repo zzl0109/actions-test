@@ -15,9 +15,9 @@ else
   patch=$(echo ${current_version} | awk -F. '{print $3}')  
 fi  
   
-echo "major ${major}"  
-echo "minor ${minor}"  
-echo "patch ${patch}"  
+# echo "major ${major}"  
+# echo "minor ${minor}"  
+# echo "patch ${patch}"  
   
 if [ $BRANCH == "master" ]; then  
   major=$((major+1))  
