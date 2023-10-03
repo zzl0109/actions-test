@@ -20,11 +20,6 @@ jobs:
         run: |
           echo $EVENT_CONTEXT
 
-      # - name: Load environment variables
-      #   uses: actions/load-env@v2
-      #   with:
-      #     file: ./.github/.env
-
       - name: Checkout code
         uses: actions/checkout@v2
         with:
@@ -33,23 +28,18 @@ jobs:
       - name: Get branch name
         id: branch_name
         run: |
-          echo "IMAGE_NAME=master" >> $GITHUB_ENV
-          echo "BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_ENV
-          echo "current_pushed_branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT 
-          echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
+          echo "CURRENT_PUSHED_BRANCH_NAME=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT
 
       - name: Get changed files
         id: changed_files
         run: |
           changed_files=$(git diff-tree --no-commit-id --name-only -r HEAD | tr '\n' ',')
           echo "changed_files $changed_files"
-          echo "changed_files=$changed_files" >> $GITHUB_OUTPUT 
-          echo "::set-output name=changed_files::$changed_files"
+          echo "CHANGED_FILES=$changed_files" >> $GITHUB_OUTPUT
 
       - name: Print changed files
         run: |
-          echo "${{ env.changed_files }}"
-          echo "${{ steps.changed_files.outputs.changed_files }}"
+          echo "${{ env.CHANGED_FILES }}"
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
@@ -58,7 +48,7 @@ jobs:
           password: ${{ secrets.DOCKER_PASSWORD }}
       - name: Build and push Docker image for service user
         # 只当目标service的代码或者common、utils下的代码变更才会执行该步骤
-        if: "contains(steps.changed_files.outputs.changed_files, 'server/service/user/') || contains(steps.changed_files.outputs.changed_files, 'server/service/utils/') || contains(steps.changed_files.outputs.changed_files, 'server/service/common/') || contains(steps.changed_files.outputs.changed_files, '.github/workflows/docker-build.yml')"
+        if: "contains(env.CHANGED_FILES, 'server/service/user/') || contains(env.CHANGED_FILES, 'server/service/utils/') || contains(env.CHANGED_FILES, 'server/service/common/') || contains(env.CHANGED_FILES, '.github/workflows/docker-build.yml')"
         run: |
           service_name='user'
           image_name=qiji-$service_name-cicd-test
@@ -66,9 +56,7 @@ jobs:
           new_version=$(./version_upgrade.sh ${{ steps.branch_name.outputs.branch }} $image_name)
 
 
-          echo "IMAGE_NAME ${{ env.IMAGE_NAME }}"
-          echo "BRANCH_NAME ${{ env.BRANCH_NAME }}"
-          echo "branch name ${{ env.current_pushed_branch }}"
+          echo "CURRENT_PUSHED_BRANCH_NAME ${{ env.CURRENT_PUSHED_BRANCH_NAME }}"
 
           echo "build $service_name service"
           echo "image name is $image_name"
@@ -78,7 +66,7 @@ jobs:
 
       - name: Build and push Docker image for service github-actions-test
         # 只当目标service的代码或者common、utils下的代码变更才会执行该步骤
-        if: "contains(steps.changed_files.outputs.changed_files, 'server/service/actions/') || contains(steps.changed_files.outputs.changed_files, 'server/service/utils/') || contains(steps.changed_files.outputs.changed_files, 'server/service/common/') || contains(steps.changed_files.outputs.changed_files, '.github/workflows/docker-build.yml')"
+        if: "contains(env.CHANGED_FILES, 'server/service/actions/') || contains(env.CHANGED_FILES, 'server/service/utils/') || contains(env.CHANGED_FILES, 'server/service/common/') || contains(env.CHANGED_FILES, '.github/workflows/docker-build.yml')"
         run: |
           service_name='actions'
           image_name=qiji-$service_name-cicd-test
