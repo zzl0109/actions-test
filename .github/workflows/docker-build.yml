@@ -57,7 +57,11 @@ jobs:
             patch=$((patch+1))
           fi
 
+          echo "current_version ${current_version}"
+
+
           new_version="$major.$minor.$patch"
+          echo "new_version ${new_version}"
 
           echo "::set-output name=new_version::$new_version"
 
