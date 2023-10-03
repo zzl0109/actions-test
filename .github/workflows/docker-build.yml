@@ -15,7 +15,8 @@ jobs:
     runs-on: ubuntu-latest
     env:
       NAMESPACE: zhangzhulei
-      IMAGE_NAME: zhangzhulei
+      IMAGE_NAME: github-actions-test
+      ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
     steps:
       - name: Checkout code
