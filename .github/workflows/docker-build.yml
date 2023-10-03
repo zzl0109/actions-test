@@ -30,7 +30,7 @@ jobs:
       - name: Get Changed Files
         id: get_changed_files
         run: |
-          changed_files=$(git diff --name-only origin/${{ steps.branch_name.outputs.branch }})  
+          changed_files=$(git diff-tree --no-commit-id --name-only -r HEAD)  
           changed_files="${changed_files//'\n'/','}" # 将换行符替换为逗号  
           echo "::set-output name=changed_files::$changed_files"
 
