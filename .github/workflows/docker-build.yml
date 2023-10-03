@@ -35,11 +35,12 @@ jobs:
         run: |
           changed_files=$(git diff-tree --no-commit-id --name-only -r HEAD | tr '\n' ',')
           echo "changed_files $changed_files"
-          echo "CHANGED_FILES=$changed_files" >> $GITHUB_OUTPUT
+          echo "CHANGED_FILES=${changed_files}" >> $GITHUB_OUTPUT
 
       - name: Print changed files
         run: |
-          echo "${{ env.CHANGED_FILES }}"
+          echo "branch ${{ env.CURRENT_PUSHED_BRANCH_NAME }}"
+          echo "changed_files ${{ env.CHANGED_FILES }}"
 
       - name: Login to DockerHub
         uses: docker/login-action@v1
