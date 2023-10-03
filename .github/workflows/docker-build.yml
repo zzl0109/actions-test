@@ -31,9 +31,9 @@ jobs:
         id: get_changed_files
         run: |
           changed_files=$(git diff-tree --no-commit-id --name-only -r HEAD)
+          echo git log
           echo "changed_files $changed_files"
-          git diff-tree --no-commit-id --name-only -r HEAD  
-          changed_files="${changed_files//'\n'/','}" # 将换行符替换为逗号  
+          # changed_files="${changed_files//'\n'/','}" # 将换行符替换为逗号  
           echo "::set-output name=changed_files::$changed_files"
       - name: Get modified files
         id: get_modified_files
