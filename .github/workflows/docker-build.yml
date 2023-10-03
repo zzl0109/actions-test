@@ -30,14 +30,10 @@ jobs:
         with:
           fetch-depth: 2
 
-      - name: Load environment variables
-        uses: actions/setup-env@v2
-        with:
-          env_file: ./.github/.env
-
       - name: Get branch name
         id: branch_name
         run: |
+          echo "IMAGE_NAME=master" >> $GITHUB_ENV
           echo "current_pushed_branch=$(echo ${GITHUB_REF#refs/heads/})" >> $GITHUB_OUTPUT 
           echo "::set-output name=branch::$(echo ${GITHUB_REF#refs/heads/})"
 
@@ -68,6 +64,8 @@ jobs:
           dockerfile_path=server/service/$service_name/Dockerfile
           new_version=$(./version_upgrade.sh ${{ steps.branch_name.outputs.branch }} $image_name)
 
+
+          echo "IMAGE_NAME ${{ env.IMAGE_NAME }}"
           echo "branch name ${{ env.current_pushed_branch }}"
 
           echo "build $service_name service"
