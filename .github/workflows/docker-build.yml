@@ -13,9 +13,13 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
-    if: ${{ github.event.paths && contains(github.event.paths, 'server/service/actions/**') }}
+    # if: ${{ github.event.paths && contains(github.event.paths, 'server/service/actions/**') }}
 
     steps:
+      - env:
+          EVENT_CONTEXT: ${{ toJSON(github.event) }}
+        run: |
+          echo $EVENT_CONTEXT
       - name: Checkout code
         uses: actions/checkout@v2
 
