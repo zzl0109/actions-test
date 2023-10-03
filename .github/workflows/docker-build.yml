@@ -2,6 +2,8 @@ name: Docker Image CI/CD
 
 on:
   push:
+    branches:
+      - "*"
     paths:
       - "server/service/user/**"
       - "server/service/actions/**"
