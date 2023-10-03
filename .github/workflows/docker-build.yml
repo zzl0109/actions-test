@@ -38,8 +38,8 @@ jobs:
 
       - name: Print changed files
         run: |
-          changed_files_str=${{ steps.changed_files.outputs.changed_files }}
-          echo "ishas: $(contains($changed_files_str, 'server/service/actions/**'))"  
+          # changed_files_str=${{ steps.changed_files.outputs.changed_files }}
+          # echo "ishas: $(contains($changed_files_str, 'server/service/actions/**'))"  
           echo "${{ steps.changed_files.outputs.changed_files }}"
 
       # - name: Get Changed Files
@@ -99,7 +99,7 @@ jobs:
           echo "Service ${service_name} image tag: $new_version"
 
       - name: Build and push Docker image for service github-actions-test
-        if: "contains(${{ steps.changed_files.outputs.changed_files }}, 'server/service/actions/**')"
+        if: "contains(steps.changed_files.outputs.changed_files, 'server/service/actions/**')"
         run: |
           service_name='github-actions-test'
           image_name=github-actions-test
