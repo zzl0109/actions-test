@@ -60,7 +60,7 @@ jobs:
           if [[ '${{ steps.existing_versions.outputs.current_version }}' == 'null' ]]; then  
             major=0  
             minor=0  
-            patch=1  
+            patch=0  
           else
             major=$(echo ${{ steps.existing_versions.outputs.current_version }} | awk -F. '{print $1}')  
             minor=$(echo ${{ steps.existing_versions.outputs.current_version }} | awk -F. '{print $2}')  
