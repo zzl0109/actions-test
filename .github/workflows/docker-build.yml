@@ -39,7 +39,7 @@ jobs:
           echo "Service ${service_name} image tag: $new_version"
 
       - name: Build and push Docker image for service github-actions-test
-        if: contains(github.event.pushed_paths, 'server/service/actions')
+        if: contains(github.event.pushed_paths, 'server/service/actions/index.html')
         run: |
           service_name='github-actions-test'
           image_name=github-actions-test
