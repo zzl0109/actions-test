@@ -1,0 +1,30 @@
+name: Build and Deploy to Kubernetes
+
+on:
+  workflow_dispatch: # 允许手动触发
+  push:
+    branches:
+      - master # 触发工作流的分支
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      - name: Set up kubectl
+        uses: azure/setup-kubectl@v1
+        with:
+          version: "latest"
+
+      - name: Update Kubernetes deployment
+        env:
+          KUBECONFIG: ${{ secrets.KUBECONFIG }} # Kubernetes 配置文件
+        run: |
+          # kubectl set image deployment/your-deployment-name \
+          #   your-container-name=your-docker-repo/qiji/h5:${{ github.sha }} \
+          #   --record
+          # kubectl rollout status deployment/your-deployment-name
+          kubectl get deployments
